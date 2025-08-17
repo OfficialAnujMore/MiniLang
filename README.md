@@ -1,40 +1,48 @@
 # MiniLang
 
-A lean, **education-first interpreter** implemented in Java. MiniLang showcases the end-to-end language toolchain — **lexing → parsing → AST → interpretation** — with clean architecture and enterprise-ready separation of concerns. It’s purpose-built to demonstrate core concepts from **CPSC 323 – Compilers and Languages** in a way that’s easy to extend, reason about, and demo.
+A compact, **education-first language interpreter** in Java. MiniLang demonstrates the full translation pipeline — **lexing → parsing → AST → interpretation** — with lexical scoping, short‑circuit logic, and clean modularity. Ideal for CPSC 323 labs, TA demos, and rapid learning.
 
-> TL;DR: high signal, low ceremony. Parse programs. Execute them. Teach the stack.
-
----
-
-## 🚀 Value Proposition
-
-* **Translation principles**: concrete walkthrough from raw source to tokens to AST to runtime.
-* **Readable architecture**: modularized into `lexer/`, `parser/`, `ast/`, `runtime/`.
-* **Deterministic semantics**: integers + booleans, block scoping, short-circuit logic.
-* **Demo-friendly**: tiny surface area, clear diagnostics, runnable samples.
+> Owner: **Anuj More**  •  GitHub: **[https://github.com/OfficialAnujMore/MiniLang](https://github.com/OfficialAnujMore/MiniLang)**
 
 ---
 
-## ✨ Feature Matrix
+## 🔎 Description
 
-| Capability           | Notes                                                                    |   |              |
-| -------------------- | ------------------------------------------------------------------------ | - | ------------ |
-| Statements           | `var` declarations, assignment, `if` / `else`, `while`, `print`, `{}`    |   |              |
-| Expressions          | Literals, variables, unary `! -`, binary \`+ - \* / % < <= > >= == != && |   | \`           |
-| Scoping              | Lexical block scoping via nested `Environment` frames                    |   |              |
-| Type Discipline      | Runtime guards for `int` vs `bool` (clear error messages)                |   |              |
-| Short-Circuit Logic  | Proper `&&` / \`                                                         |   | \` semantics |
-| Developer Ergonomics | `build.sh` and `run.sh`; curated `samples/`                              |   |              |
+A compact Java interpreter that tokenizes source code, builds an AST, and executes it with lexical scoping. Perfect for teaching grammars, operator precedence, and runtime behavior.
 
 ---
 
-## 🧠 Learning Outcomes (Course-aligned)
+## ✨ Features (short & simple)
 
-* **Lexical analysis** — scanning & token kinds
-* **Top-down parsing** — recursive descent with operator precedence
-* **AST design** — minimal, extensible node set
-* **Semantic model** — lexical scope & environment chaining
-* **Execution model** — tree-walking evaluator with type checks
+* **Lexer with source spans** — turns text into tokens; includes line\:column; handles multi‑char ops, comments, and spaces.
+* **Recursive‑descent parser** — builds the AST with rule‑per‑function; honors precedence (e.g., `||` lowest → primaries highest); clear “expected X” errors.
+* **AST model** — small, extensible node set for statements & expressions; structure only.
+* **Interpreter (tree‑walking)** — executes the AST step‑by‑step; nested scopes; supports `&&` and `||` short‑circuiting.
+* **Runtime type guards** — checks `int` vs `bool` with helpful messages.
+* **Deterministic semantics** — predictable math/comparison ops; standard control flow (`if/else`, `while`, `{ ... }`).
+* **Developer ergonomics** — `build.sh` & `run.sh`, clean folders (`lexer/`, `parser/`, `ast/`, `runtime/`), works in any IDE.
+
+---
+
+## 🧠 Learning Outcomes & Syllabus Alignment
+
+* **Language design & grammars** → Tiny imperative language (ints/bools, statements, expressions) with clear precedence.
+* **Lexical analysis** → Tokenizer with keyword map and precise line/col diagnostics.
+* **Parsing techniques** → Top‑down recursive descent; precedence; fast `expect(...)` failures.
+* **Abstract syntax trees** → Clean split between statements and expressions; easy to extend.
+* **Semantic checks** → Lexical scoping via nested environments; name resolution; decl vs assign; runtime type checks.
+* **Execution model** → Tree‑walking interpreter, short‑circuit `&&`/`||`, visible output via `print`.
+* **Error reporting** → Coordinated lexer/parser errors; clear runtime messages.
+* **Tooling & testing** → Modular layout, build/run scripts, sample programs for quick validation.
+
+---
+
+## 🧰 Tools & Tech Stack
+
+* **Java 17+** — Core implementation (lexer, parser, AST, interpreter).
+* **Bash/Zsh scripts** — One‑touch build & run (`./build.sh`, `./run.sh`).
+* **Text editor/IDE** — VS Code or IntelliJ.
+* **Git & GitHub** — Version control, PRs, docs.
 
 ---
 
@@ -71,8 +79,6 @@ primary     := NUMBER | "true" | "false" | IDENT | "(" expr ")"
 
 ## 📦 Project Structure
 
-> You’re here:
-
 ```
 minilang/
 ├── README.md
@@ -103,92 +109,81 @@ minilang/
 
 ---
 
-## 🛠️ Prerequisites
-
-* **JDK 17+** (`java -version`, `javac -version`)
-* Bash/Zsh (for the provided scripts)
-
-  > Windows users: use Git Bash / WSL, or run the `javac`/`java` commands directly.
-
----
-
 ## ⚙️ Build & Run
 
-### 1) Build
+**Prerequisites:** JDK 17+, Bash/Zsh (Windows: Git Bash/WSL or run `javac`/`java` directly.)
+
+**Build**
 
 ```bash
 chmod +x build.sh run.sh
 ./build.sh
 ```
 
-### 2) Execute a program
+**Run**
 
 ```bash
 ./run.sh samples/program.ml
-```
-
-The entry point enforces a single file argument. Direct `java` usage:
-
-```bash
+# or directly
 java -cp out MiniLang samples/factorial.ml
 ```
 
 ---
 
-## 🧪 Sample Programs
+## ✅ Execution Proofs (Screenshots)
 
-* **Arithmetic**: `samples/arithmetic.ml` — operators & precedence
-* **Factorial**: `samples/factorial.ml` — loops & state
-* **Fibonacci**: `samples/fibonacci.ml` — iterative sequence
-* **Booleans**: `samples/booleans.ml` — truth tables & `&&`/`||`/`!`
+The following screenshots validate successful end‑to‑end runs across multiple programs. Store images under `screenshots/`.
 
-> Pro tip: tweak a program, re-run the same command, narrate the output. Great for TA demos.
+* **Arithmetic:** `./run.sh samples/arithmetic.ml`
+  `![Arithmetic program run](screenshots/arithmetic-run.png)`
+* **Factorial:** `./run.sh samples/factorial.ml`
+  `![Factorial program run](screenshots/factorial-run.png)`
+* **Fibonacci:** `./run.sh samples/fibonacci.ml`
+  `![Fibonacci program run](screenshots/fibonacci-run.png)`
+* **Booleans:** `./run.sh samples/booleans.ml`
+  `![Booleans program run](screenshots/booleans-run.png)`
+
+> Optional hero image:
+> `![Language Interpreter — MiniLang](screenshots/language-interpreter.png "lexing → parsing → AST → interpretation")`
+
+---
+
+## 📊 Outcomes
+
+* See the whole pipeline — source → tokens → AST → execution.
+* Understand grammars & precedence — how syntax maps to the AST.
+* Master scope & lifetimes — nested blocks and variable shadowing.
+* Build semantic discipline — clear type checks and actionable errors.
+* Move fast — run and extend quickly; perfect for labs, workshops, and evaluations.
 
 ---
 
 ## 🔍 Troubleshooting
 
-* **`permission denied: ./build.sh`**
-  `chmod +x build.sh run.sh`
-
-* **`Could not find or load main class MiniLang`**
-  Ensure you ran `./build.sh` successfully and are executing from the repo root:
-  `java -cp out MiniLang samples/program.ml`
-
-* **`Type error expected int/bool ...`**
-  Intentional runtime guardrail. Check your expression types.
-
-* **Parser errors** like `Expected ) at line:col ...`
-  The parser reports the earliest failing token; scan nearby syntax.
+* `permission denied: ./build.sh` → `chmod +x build.sh run.sh`
+* `Could not find or load main class MiniLang` → ensure `./build.sh` succeeded, run from repo root: `java -cp out MiniLang samples/program.ml`
+* `Type error expected int/bool ...` → adjust expression types; guards are intentional.
+* Parser errors like `Expected ) at line:col ...` → fix nearby syntax; parser reports earliest failing token.
 
 ---
 
-## 🧭 Design at a Glance
-
-* **Lexer**: single-pass scanner, emits `Token(kind, lexeme, line, col)`
-* **Parser**: recursive descent, clear rule per precedence tier
-* **AST**: minimalist sealed-by-convention node set (`Block`, `VarDecl`, `Assign`, `If`, `While`, `Print`, `Literal`, `Variable`, `Unary`, `Binary`)
-* **Runtime**: `Environment` chain for lexical scope; interpreter walks AST with type guards
-
----
-
-## 🛣️ Roadmap (stretch goals)
+## 🛣️ Roadmap (stretch)
 
 * Functions + call stack (return signaling)
-* Static type checker (compile-time diagnostics)
-* Source spans in AST for pinpoint errors
-* REPL mode (interactive statements/expressions)
-* Constant folding & small-step optimizations
-* Packaging as a runnable JAR
+* Static type checker
+* Source spans in AST
+* REPL mode
+* Constant folding / small‑step optimizations
+* Runnable JAR packaging
 
 ---
 
 ## 📄 License
 
-MIT — use freely for learning, demos, and portfolio work. Attribution appreciated.
+MIT — use freely for learning, demos, and portfolio work.
 
 ---
 
 ## 🙌 Acknowledgments
 
-Built to accelerate learning for **CPSC 323**. Feedback loops welcome — PRs, issues, and suggestions help the project (and your future students) get better.
+Built to accelerate learning for **CPSC 323**. PRs, issues, and suggestions welcome.
