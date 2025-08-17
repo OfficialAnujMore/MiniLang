@@ -1,0 +1,16 @@
+# Ignore compiled class files
+*.class
+
+# Ignore build directories
+/out/
+/bin/
+/target/
+
+# Ignore IDE/editor configs
+.idea/
+.vscode/
+*.iml
+
+# Mac and Linux cruft
+.DS_Store
+*.swp
